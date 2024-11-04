@@ -2,7 +2,7 @@ from chunk_vector_store import ChunkVectorStore as cvs
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 from langchain.prompts import PromptTemplate
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 class Rag:
 
@@ -22,7 +22,8 @@ class Rag:
       Answer: [/INST]
       """
     )
-    self.model = ChatOllama(model="mistral")
+    #self.model = ChatOllama(model="mistral")
+    self.model = ChatOllama( model="llama3.1", temperature=0)
 
   def set_retriever(self):
     self.retriever = self.vector_store.as_retriever(
@@ -61,3 +62,16 @@ class Rag:
     self.vector_store = None
     self.chain = None
     self.retriever = None
+
+
+""" path_source= "test_1_pdf_one_page.pdf"
+obj = Rag()
+obj.feed(path_source)
+while(True):
+
+  ask_qu =input("ask : ")
+  if ask_qu == "stop":
+    break
+  else:
+    resualt = obj.ask(ask_qu)
+    print(resualt) """
